@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 
 import dataset as ds
 
-EMB_SIZE = 300
+EMB_SIZE = 20
 
 h_sentences = ds.dataset()
 
-model = Word2Vec(size=EMB_SIZE, window=5, min_count=5)
+model = Word2Vec(size=EMB_SIZE, window=4, min_count=5, max_vocab_size=10000)
 model.build_vocab(h_sentences)  # can be a non-repeatable, 1-pass generator
 print('Training word2vec model.....')
 model.train(h_sentences)  # can be a non-repeatable, 1-pass generator

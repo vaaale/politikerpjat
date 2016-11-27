@@ -1,6 +1,8 @@
 import re
 
+
 DATASET_FILNAME = 'data/dataset.csv'
+
 
 def dataset(parti=None):
     class MySentences(object):
@@ -18,7 +20,6 @@ def dataset(parti=None):
                         yield tmp.split()
 
     return MySentences()
-
 
 
 if __name__ == '__main__':
