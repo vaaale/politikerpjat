@@ -96,6 +96,8 @@ if __name__ == '__main__':
         tmp_politikere = set()
         for line in f:
             segs = line.split('|')
+            if len(segs) < 5:
+                continue
             m = re.search('(?P<name>[\sa-zA-ZæøåÆØÅ.-]+)(?P<parti>\((.*)\))?', segs[3])
             if m != None:
                 tmp_name = m.group('name').strip().lower()
@@ -106,7 +108,8 @@ if __name__ == '__main__':
                     position = 'statsminister'
 
                 name = tmp_name.replace('statstråd', '').replace('statsråd', '').replace('statråd', '').replace('statsminister', '').strip()
-                if 'presidenten' == name:
+                name = re.sub(' +', ' ', name)
+                if 'presidenten' == name or 'president' == name:
                     #print('presidenten  -->  N/A')
                     print(segs[0]+'|'+segs[2]+'|presidenten|P|'+segs[4].strip(), file=out)
                 else:
@@ -114,7 +117,7 @@ if __name__ == '__main__':
                         #print(name + '  -->  ' + pol[name].upper())
                         print(segs[0]+'|'+segs[2]+'|'+name+'|'+pol[name]+'|'+segs[4].strip(), file=out)
                     except Exception as e:
-                        print('Not found: ' + tmp_name)
+                        print('Not found: ' + name)
 
 
 
