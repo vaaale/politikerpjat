@@ -4,7 +4,7 @@ import os
 REPS_FILENAME = 'data/reps.csv'
 STATSR_FILENAME = 'data/stats.csv'
 POLITIKERE_FILENAME = 'data/politikere.csv'
-
+DATASET_FILENAME = 'data/dataset.csv'
 
 def save(alist, filename):
     with open(filename, 'w', encoding='UTF-8') as out:
@@ -89,10 +89,10 @@ def load_politikere():
 if __name__ == '__main__':
     pol = load_politikere()
 
-    for name in pol:
-        print(name + ":" + pol[name])
+    # for name in pol:
+    #     print(name + ":" + pol[name])
 
-    with open("data/ordinary.csv", "r", encoding="UTF-8") as f:
+    with open("data/ordinary.csv", "r", encoding="UTF-8") as f, open(DATASET_FILENAME, 'w', encoding='UTF-8') as out:
         tmp_politikere = set()
         for line in f:
             segs = line.split('|')
@@ -105,11 +105,16 @@ if __name__ == '__main__':
                 elif tmp_name.startswith('statsminister'):
                     position = 'statsminister'
 
-                name = tmp_name.replace('statsråd', '').replace('statsminister', '').strip()
-                try:
-                    print(name + '  -->  ' + pol[name].upper())
-                except Exception as e:
-                    print('Not found: ' + tmp_name)
+                name = tmp_name.replace('statstråd', '').replace('statsråd', '').replace('statråd', '').replace('statsminister', '').strip()
+                if 'presidenten' == name:
+                    #print('presidenten  -->  N/A')
+                    print(segs[0]+'|'+segs[2]+'|presidenten|P|'+segs[4].strip(), file=out)
+                else:
+                    try:
+                        #print(name + '  -->  ' + pol[name].upper())
+                        print(segs[0]+'|'+segs[2]+'|'+name+'|'+pol[name]+'|'+segs[4].strip(), file=out)
+                    except Exception as e:
+                        print('Not found: ' + tmp_name)
 
 
 
