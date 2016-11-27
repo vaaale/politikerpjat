@@ -6,6 +6,7 @@ STATSR_FILENAME = 'data/stats.csv'
 POLITIKERE_FILENAME = 'data/politikere.csv'
 DATASET_FILENAME = 'data/dataset.csv'
 
+
 def save(alist, filename):
     with open(filename, 'w', encoding='UTF-8') as out:
         for l in sorted(alist):
@@ -84,8 +85,6 @@ def load_politikere():
     return politikere
 
 
-
-
 if __name__ == '__main__':
     pol = load_politikere()
 
@@ -118,9 +117,6 @@ if __name__ == '__main__':
                         print(segs[0]+'|'+segs[2]+'|'+name+'|'+pol[name]+'|'+segs[4].strip(), file=out)
                     except Exception as e:
                         print('Not found: ' + name)
-
-
-
 
 
 
